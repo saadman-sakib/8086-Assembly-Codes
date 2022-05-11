@@ -1,0 +1,11 @@
+
+
+.MODEL SMALL
+.STACK 100H
+.DATA 
+.CODE    
+    MAIN PROC  
+       MOV CL, 10011001b
+       ROL CL, 1
+    MAIN ENDP
+    END MAIN
