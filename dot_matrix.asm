@@ -1,11 +1,12 @@
-
-
 .MODEL SMALL
 .STACK 100H
 .DATA 
-    DOTS DB 07FH
+    DOTS DB 1111111B, 0011001B, 0101001B, 1000110B, 0000000B
 .CODE    
-    MAIN PROC  
+    MAIN PROC
+        MOV AX, @DATA
+        MOV DS, AX
+              
         MOV DX, 2000H
         DEC DX   
         
@@ -14,41 +15,28 @@
         PUSH CX
         
         ; Time Break
-        INNER_1: MOV CX, 12H
+        MOV CX, 12H
         TIMER:  NOP
                 LOOP TIMER 
              
-             
-        ; Writting letter       
-        INC DX
-        MOV AL, 07FH
-        OUT DX, AL
-        
-        INC DX
-        MOV AL, 019H
-        OUT DX, AL
-        
-        INC DX
-        MOV AL, 029H
-        OUT DX, AL
-        
-        INC DX
-        MOV AL, 046H
-        OUT DX, AL
-        
-        INC DX
-        MOV AL, 00H
-        OUT DX, AL
-        
+        ; Writting letter 
+        MOV CX, 5 
+        MOV DI, 0 
+        WRITE:       
+            INC DX
+            MOV AL, DOTS[DI]
+            OUT DX, AL
+            INC DI
+            LOOP WRITE
+                
         SUB DX, 0AH
-                    
-                    
+                              
         ; Removing Letter
-        INNER_2: MOV CX, 05H
-        L2: INC DX
+        MOV CX, 05H
+        REMOVE: INC DX
             MOV AL, 0
             OUT DX, AL
-            LOOP L2 
+            LOOP REMOVE 
         
         ADD DX, 5H
         
